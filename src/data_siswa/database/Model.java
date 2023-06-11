@@ -4,18 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class Model{
 
-    private static String table = "tb_siswa";
+    private String table = "";
 
-    protected static String dbUrl = "jdbc:mysql://localhost:3306/db_siswa";
-    protected static String username = "root";
-    protected static String password = "";
+    protected String dbUrl = "jdbc:mysql://localhost:3306/db_siswa";
+    protected String username = "root";
+    protected String password = "";
 
-    private static Connection getConnection(){
+    protected ResultSet data;
+
+    protected Connection getConnection(){
        
         String unicode="useSSL=false&autoReconnect=true&useUnicode=yes&characterEncoding=UTF-8";
         try{
@@ -27,15 +27,19 @@ public abstract class Model{
         return null;
     }
 
-    public static ResultSet get(){
-        ResultSet result = null;
-        try {
-            java.sql.Statement statement = getConnection().createStatement();
-            result = statement.executeQuery("select * from " + table);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    abstract public Collection<? extends Model> getAll();
 
-        return result;
-    }
+    abstract public <T extends Model> T get(int id);    
+    
+    abstract public <T extends Model> T where(String column, String value);
+
+    abstract public Collection<? extends Model> sql(String sql);
+
+    abstract public boolean save();
+
+    abstract public boolean delete();
+
+    abstract public <T extends Model> T convert(ResultSet result);
+
+
 }

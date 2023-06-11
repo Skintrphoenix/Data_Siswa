@@ -5,8 +5,8 @@ USE db_siswa;
 CREATE TABLE IF NOT EXISTS tb_siswa(
 	id INT(16) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	nama_lengkap VARCHAR(64) UNIQUE KEY NOT NULL,
-	nomor_induk VARCHAR(6) NOT NULL,
-	nisn VARCHAR(12) NOT NULL,
+	nomor_induk VARCHAR(6) UNIQUE KEY NOT NULL,
+	nisn VARCHAR(12) UNIQUE KEY NOT NULL,
     gender ENUM('laki-laki','perempuan') NOT NULL,
     agama ENUM('Islam','Katolik', 'Kristen', 'Hindu', 'Budha', 'Konghucu') NOT NULL,
     status_dalam_keluarga ENUM('Anak Kandung', 'Bukan Anak Kandung') NOT NULL,
@@ -23,29 +23,29 @@ CREATE TABLE IF NOT EXISTS tb_siswa_detail(
 	siswa_id INT(16) NOT NULL,
 	di_kelas VARCHAR(20) NOT NULL,
 	pada_tanggal DATE NOT NULL,
-	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id)
+	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tb_siswa_ortu(
 	id INT(16) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	siswa_id INT(16) NOT NULL,
-	nama_ayah VARCHAR(64) UNIQUE KEY NOT NULL,
-	nama_ibu VARCHAR(64) UNIQUE KEY NOT NULL,
+	nama_ayah VARCHAR(64) NOT NULL,
+	nama_ibu VARCHAR(64) NOT NULL,
     alamat TEXT NOT NULL,
-	pekerjaan_ayah VARCHAR(64) UNIQUE KEY NOT NULL,
-	pekerjaan_ibu VARCHAR(64) UNIQUE KEY NOT NULL,
+	pekerjaan_ayah VARCHAR(64) NOT NULL,
+	pekerjaan_ibu VARCHAR(64) NOT NULL,
     nomor_telfon VARCHAR(13) NOT NULL,
-	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id)
+	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tb_siswa_wali(
 	id INT(16) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	siswa_id INT(16) NOT NULL,
-	nama VARCHAR(64) UNIQUE KEY NOT NULL,
-    alamat TEXT NOT NULL,
-	pekerjaan VARCHAR(64) UNIQUE KEY NOT NULL,
-	nomor_telfon VARCHAR(13) NOT NULL,
-	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id)
+	nama VARCHAR(64),
+    alamat TEXT,
+	pekerjaan VARCHAR(64),
+	nomor_telfon VARCHAR(13),
+	FOREIGN KEY (siswa_id) REFERENCES tb_siswa(id) ON DELETE CASCADE
 );
 
 

@@ -4,6 +4,8 @@
  */
 package data_siswa;
 
+import data_siswa.form.Dashboard;
+
 /**
  *
  * @author ASUS
@@ -15,6 +17,8 @@ public class Data_Siswa {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Dashboard dash = new Dashboard();
+        dash.show();
     }
     
 }
