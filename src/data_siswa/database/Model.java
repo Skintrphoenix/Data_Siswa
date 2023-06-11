@@ -1,19 +1,40 @@
 package data_siswa.database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public abstract class Model{
 
     private String table = "";
 
-    protected String dbUrl = "jdbc:mysql://localhost:3306/db_siswa";
-    protected String username = "root";
+    protected String dbUrl = "";
+    protected String username = "";
     protected String password = "";
 
     protected ResultSet data;
+
+    public Model(){
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("./mysql.properties"));
+            this.dbUrl = properties.getProperty("mysql.dburl");
+            this.username = properties.getProperty("mysql.username");
+            this.password = properties.getProperty("mysql.password");
+            System.out.println(this.dbUrl);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     protected Connection getConnection(){
        
